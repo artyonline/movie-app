@@ -1,47 +1,33 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { createStore } from 'redux';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import { createStore } from "redux";
+import { Provider } from "react-redux";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
-// STORE -> GLOBALIZED STATE
+import rootReducer from "./reducers";
+import App from "./App";
+import "./index.css";
+import Wishlist from "./routes/Wishlist";
+import Movie from "./routes/Movie";
+import Home from "./routes/Home";
+import Profile from "./routes/Profile";
 
-// ACTION ->
-const increment = () => {
-    return { 
-        type: 'INCREMENT'
-    }
-}
-const decrement = () => {
-    return {
-        type: 'DECREMENT'
-    }
-}
-// REDUCER ->
-const counter = (state = 0, action) => {
-    switch (action.type) {
-        case "INCREMENT":
-            return state + 1;
-        case "DECREMENT":
-            return state - 1;
-    }
-};
-
-let store = createStore(counter);
-
-store.subscribe(() => console.log(store.getState()));
-
-// DISPATCH
-store.dispatch(increment())
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+ReactDOM.render(
+  <Provider store={store}>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home/>} />
+        <Route path="movie" element={<Movie/>} />
+        <Route path="wishlist" element={<Wishlist/>} />
+        <Route path="profile" element={<Profile/>} />
+      </Routes>
+    </BrowserRouter>
+  </Provider>,
+  document.getElementById("root")
+);
