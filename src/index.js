@@ -12,6 +12,8 @@ import Wishlist from "./routes/Wishlist";
 import Movie from "./routes/Movie";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
+import SignIn from "./containers/Signin"
+import SignUp from "./containers/Signup"
 
 const store = createStore(
   rootReducer,
@@ -26,6 +28,8 @@ ReactDOM.render(
         <Route path="movie" element={<Movie/>} />
         <Route path="wishlist" element={<Wishlist/>} />
         <Route path="profile" element={<Profile/>} />
+        <Route path="signin" element={<SignIn/>} />
+        <Route path="signup" element={<SignUp/>} />
       </Routes>
     </BrowserRouter>
   </Provider>,
