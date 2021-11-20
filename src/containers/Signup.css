@@ -1,0 +1,12 @@
+.centered-div{
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+  }
+
+.form-content>label, input{
+max-width: 600px
+}
+.form-content>label, span{
+min-width: 200px
+}
