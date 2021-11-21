@@ -6,9 +6,13 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import styles from "./Signup.css";
+import {signUp} from "../actions/userAction"
+import {compose} from "redux";
+import {withRouter} from "react-router-dom";
+import {connect} from "react-redux";
+import styles from "../styles/unauth.module.css";
 
-export default class SignUp extends Component {
+class SignUp extends Component {
   state = {
     data: {
       name: null,
@@ -17,19 +21,25 @@ export default class SignUp extends Component {
     },
   };
 
-  onSubmit = () => {
-    console.log(this.state.data)
+  onSubmit = async () => {
+    await this.props.signUp(this.state.data);
+    if (this.props.userState.isLoggedIn) {
+      console.log("dashboard")
+      // Redirect to home page.
+      this.props.history.push("/")
+    }
   }
   render() {
     return (
       <Card className="text-center">
         <Card.Header>Sign Up</Card.Header>
-        <div className="centered-div">
+        <div className={styles.centeredDiv}>
           <Card.Body>
             <Form className="form-content">
               <InputGroup className="mb-3">
-                <InputGroup.Text>Full Name</InputGroup.Text>
+                <InputGroup.Text className={styles.signInputGroupText}>Full Name</InputGroup.Text>
                 <FormControl
+                    className={styles.signFormContent}
                   aria-label="Full Name"
                   placeholder="John Doe"
                   type="text"
@@ -43,8 +53,9 @@ export default class SignUp extends Component {
                 />
               </InputGroup>
               <InputGroup className="mb-3">
-                <InputGroup.Text>Email</InputGroup.Text>
+                <InputGroup.Text className={styles.signInputGroupText}>Email</InputGroup.Text>
                 <FormControl
+                    className={styles.signFormContent}
                   aria-label="Email"
                   placeholder="name@example.com"
                   type="email"
@@ -58,8 +69,9 @@ export default class SignUp extends Component {
                 />
               </InputGroup>
               <InputGroup className="mb-3">
-                <InputGroup.Text>Password</InputGroup.Text>
+                <InputGroup.Text className={styles.signInputGroupText}>Password</InputGroup.Text>
                 <FormControl
+                    className={styles.signFormContent}
                   aria-label="password"
                   placeholder="********"
                   type="password"
@@ -72,7 +84,7 @@ export default class SignUp extends Component {
                   }))}
                 />
               </InputGroup>
-              <InputGroup className="mb-3 button-div">
+              <InputGroup  className={styles.buttonDiv + " mb-3"}>
                 <Button
                   className="btnFormSend"
                   variant="outline-success"
@@ -89,3 +101,9 @@ export default class SignUp extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  userState: state.userStore
+})
+
+export default  compose(withRouter, connect (mapStateToProps, { signUp }) )(SignUp);

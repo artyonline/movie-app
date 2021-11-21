@@ -6,7 +6,7 @@ import {
   InputGroup,
   FormControl,
 } from "react-bootstrap";
-import styles from "./Signup.css";
+import styles from "../styles/unauth.module.css";
 import { signIn } from "../actions/userAction"
 import { connect } from "react-redux";
 import { compose } from "redux";
@@ -32,12 +32,13 @@ class Signin extends Component {
     return (
       <Card className="text-center">
         <Card.Header>Sign Up</Card.Header>
-        <div className="centered-div">
+        <div className={styles.centeredDiv}>
           <Card.Body>
             <Form className="form-content">
               <InputGroup className="mb-3">
-                <InputGroup.Text>Email</InputGroup.Text>
+                <InputGroup.Text className={styles.signInputGroupText}>Email</InputGroup.Text>
                 <FormControl
+                  className={styles.signFormContent}
                   aria-label="Email"
                   placeholder="name@example.com"
                   type="email"
@@ -51,8 +52,9 @@ class Signin extends Component {
                 />
               </InputGroup>
               <InputGroup className="mb-3">
-                <InputGroup.Text>Password</InputGroup.Text>
+                <InputGroup.Text className={styles.signInputGroupText}>Password</InputGroup.Text>
                 <FormControl
+                  className={styles.signFormContent}
                   aria-label="password"
                   placeholder="********"
                   type="password"
@@ -65,7 +67,7 @@ class Signin extends Component {
                   }))}
                 />
               </InputGroup>
-              <InputGroup className="mb-3 button-div">
+              <InputGroup className={styles.buttonDiv + " mb-3"}>
                 <Button
                   className="btnFormSend"
                   variant="outline-success"
