@@ -14,6 +14,10 @@ export default class Filters extends React.Component {
             sort: null
         },
     };
+    
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        console.log(prevState)
+    }
 
     render() {
         return (
