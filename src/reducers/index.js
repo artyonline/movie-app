@@ -1,10 +1,9 @@
 import counterReducer from "./counter";
-import userReducer from "./isLogged";
-
+import userStore from "./userStore";
 import { combineReducers } from 'redux';
 
 const rootReducer = combineReducers({
     counter: counterReducer,
-    user: userReducer
+    userStore: userStore
 })
 export default rootReducer;
