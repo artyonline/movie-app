@@ -3,8 +3,6 @@ import {
   Card,
   Button,
   Form,
-  Col,
-  Row,
   InputGroup,
   FormControl,
 } from "react-bootstrap";
@@ -74,13 +72,13 @@ export default class SignUp extends Component {
                   }))}
                 />
               </InputGroup>
-              <InputGroup className="mb-3">
+              <InputGroup className="mb-3 button-div">
                 <Button
                   className="btnFormSend"
                   variant="outline-success"
                   onClick={this.onSubmit}
                 >
-                  Send Feedback
+                  Signup
                 </Button>
               </InputGroup>
             </Form>

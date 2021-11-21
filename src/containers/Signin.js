@@ -1,33 +1,90 @@
 import React, { Component } from "react";
+import {
+  Card,
+  Button,
+  Form,
+  InputGroup,
+  FormControl,
+} from "react-bootstrap";
+import styles from "./Signup.css";
+import { signIn } from "../actions/userAction"
+import { connect } from "react-redux";
+import { compose } from "redux";
+import { withRouter } from 'react-router-dom'
 
-export default class Signin extends Component {
-    render() {
-        return (
-            <form>
-                <h3>Sign In</h3>
+class Signin extends Component {
+  state = {
+    data: {
+      email: null,
+      password: null,
+    },
+  };
 
-                <div className="form-group">
-                    <label>Email address</label>
-                    <input type="email" className="form-control" placeholder="Enter email" />
-                </div>
-
-                <div className="form-group">
-                    <label>Password</label>
-                    <input type="password" className="form-control" placeholder="Enter password" />
-                </div>
-
-                <div className="form-group">
-                    <div className="custom-control custom-checkbox">
-                        <input type="checkbox" className="custom-control-input" id="customCheck1" />
-                        <label className="custom-control-label" htmlFor="customCheck1">Remember me</label>
-                    </div>
-                </div>
-
-                <button type="submit" className="btn btn-primary btn-block">Submit</button>
-                <p className="forgot-password text-right">
-                    Forgot <a href="#">password?</a>
-                </p>
-            </form>
-        );
+  onSubmit = async () => {
+    await this.props.signIn(this.state.data);
+    if (this.props.userState.isLoggedIn) {
+      console.log("dashboard")
+      // Redirect to home page.
+      this.props.history.push("/")
     }
+  }
+  render() {
+    return (
+      <Card className="text-center">
+        <Card.Header>Sign Up</Card.Header>
+        <div className="centered-div">
+          <Card.Body>
+            <Form className="form-content">
+              <InputGroup className="mb-3">
+                <InputGroup.Text>Email</InputGroup.Text>
+                <FormControl
+                  aria-label="Email"
+                  placeholder="name@example.com"
+                  type="email"
+                  value={this.state.data.email}
+                  onChange={e => this.setState(prevState => ({
+                    data: {
+                      ...prevState.data,
+                      email: e.target.value 
+                    }
+                  }))}
+                />
+              </InputGroup>
+              <InputGroup className="mb-3">
+                <InputGroup.Text>Password</InputGroup.Text>
+                <FormControl
+                  aria-label="password"
+                  placeholder="********"
+                  type="password"
+                  value={this.state.data.password}
+                  onChange={e => this.setState(prevState => ({
+                    data: {
+                      ...prevState.data,
+                      password: e.target.value 
+                    }
+                  }))}
+                />
+              </InputGroup>
+              <InputGroup className="mb-3 button-div">
+                <Button
+                  className="btnFormSend"
+                  variant="outline-success"
+                  onClick={this.onSubmit}
+                >
+                  Login
+                </Button>
+              </InputGroup>
+            </Form>
+          </Card.Body>
+        </div>
+        <Card.Footer className="text-muted">Movie App</Card.Footer>
+      </Card>
+    );
+  }
 }
+
+const mapStateToProps = state => ({
+  userState: state.userStore
+})
+
+export default  compose(withRouter, connect (mapStateToProps, { signIn }) )(Signin);
