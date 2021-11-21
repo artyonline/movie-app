@@ -35,7 +35,11 @@ router.post("/register", (req, res) => {
         if (err) throw err;
         console.log("One User Added");
       });
-      res.send(newUser);
+      res.send({
+        id: newUser.id,
+        name: newUser.name,
+        email: newUser.email
+      });
     }
   });
 

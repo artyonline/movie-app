@@ -9,8 +9,8 @@ import Wishlist from "./routes/Wishlist";
 import Movie from "./routes/Movie";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
-import SignIn from "./containers/Signin";
-import SignUp from "./containers/Signup";
+import SignIn from "./routes/Signin";
+import SignUp from "./routes/Signup";
 import store from "./store";
 
 ReactDOM.render(
