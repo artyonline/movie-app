@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { Breadcrumb } from "react-bootstrap";
 
 import Header from "../components/Header";
 import Filters from "../components/Filters";
@@ -13,9 +12,6 @@ class Home extends Component {
       <div>
         <Header />
         <Filters/>
-        <Breadcrumb>
-          <Breadcrumb.Item active>Home</Breadcrumb.Item>
-        </Breadcrumb>
       </div>
     );
   }
