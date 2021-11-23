@@ -1,9 +1,9 @@
-import counterReducer from "./counter";
 import userStore from "./userStore";
-import { combineReducers } from 'redux';
+import wishlistStore from "./wishlistStore";
+import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
-    counter: counterReducer,
-    userStore: userStore
-})
+  userStore: userStore,
+  wishlist: wishlistStore,
+});
 export default rootReducer;
