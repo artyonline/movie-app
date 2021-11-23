@@ -1,0 +1,16 @@
+.centeredDiv {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+.buttonDiv {
+  margin: auto;
+  width: 13%;
+}
+
+.signFormContent {
+  max-width: 600px;
+}
+.signInputGroupText {
+  min-width: 100px;
+}

@@ -1,33 +1,32 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-import rootReducer from "./reducers";
-import App from "./App";
 import "./index.css";
 import Wishlist from "./routes/Wishlist";
 import Movie from "./routes/Movie";
 import Home from "./routes/Home";
 import Profile from "./routes/Profile";
-
-const store = createStore(
-  rootReducer,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-);
+import SignIn from "./routes/Signin";
+import SignUp from "./routes/Signup";
+import store from "./store";
 
 ReactDOM.render(
   <Provider store={store}>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home/>} />
-        <Route path="movie" element={<Movie/>} />
-        <Route path="wishlist" element={<Wishlist/>} />
-        <Route path="profile" element={<Profile/>} />
-      </Routes>
-    </BrowserRouter>
+      <Router>
+        <div>
+          <Switch>
+            <Route path="/" exact component={Home} />
+            <Route path="/movie" exact component={Movie} />
+            <Route path="/wishlist" exact component={Wishlist} />
+            <Route path="/profile" exact component={Profile} />
+            <Route path="/signin" exact component={SignIn} />
+            <Route path="/signup" exact component={SignUp} />
+          </Switch>
+        </div>
+      </Router>
   </Provider>,
   document.getElementById("root")
 );

@@ -1,0 +1,15 @@
+.searchBarDiv {
+    /*Over ride the default with of centeredDiv*/
+    width: 80% !important
+}
+.dropDownFilterRow {
+     /*Over ride the default with of centeredDiv*/
+     width: 100%;
+ }
+.filterDropdownButtonButton {
+    min-width: 200px
+}
+
+.FormControl {
+    min-width: 80% !important
+}
