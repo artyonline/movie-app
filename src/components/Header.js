@@ -1,18 +1,20 @@
 import React from "react";
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container } from "react-bootstrap";
+import ProfileDropdown from "./ProfileDropdown";
 
 // Icons
-import { Cart4 } from 'react-bootstrap-icons';
-import { PersonCircle } from 'react-bootstrap-icons';
+import { Cart4 } from "react-bootstrap-icons";
 
-export default function Header() {
+export default function Header({ logout }) {
   return (
     <Navbar bg="light" variant="light">
       <Container>
         <Navbar.Brand href="/">Movie App</Navbar.Brand>
         <Nav className="justify-content-end">
-          <Nav.Link href="/wishlist"><Cart4/></Nav.Link>
-          <Nav.Link href="/profile"><PersonCircle/></Nav.Link>
+          <Nav.Link href="/wishlist">
+            <Cart4 />
+          </Nav.Link>
+          <ProfileDropdown logout={logout} />
         </Nav>
       </Container>
     </Navbar>
