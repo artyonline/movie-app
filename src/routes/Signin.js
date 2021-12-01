@@ -73,11 +73,25 @@ class Signin extends Component {
               </InputGroup>
               <InputGroup className={styles.buttonDiv + " mb-3"}>
                 <Button
-                  className="btnFormSend"
-                  variant="outline-success"
+                  className={styles.buttonDiv}
+                  variant="outline-primary"
                   onClick={this.onSubmit}
                 >
                   Login
+                </Button>
+              </InputGroup>
+              Doesn't have an account?
+              <InputGroup className={styles.buttonDiv + " mb-3"}>
+                <Button
+                  className={styles.buttonDiv}
+                  variant="outline-success"
+                  onClick={() => {
+                    this.props.history.push({
+                      pathname: "/signup",
+                    });
+                  }}
+                >
+                  Register Instead
                 </Button>
               </InputGroup>
             </Form>

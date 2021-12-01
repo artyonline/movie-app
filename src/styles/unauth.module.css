@@ -5,7 +5,12 @@
 }
 .buttonDiv {
   margin: auto;
-  width: 13%;
+  width: 70%;
+}
+
+.btnFormSend {
+  background-color: red;
+  color: red
 }
 
 .signFormContent {
