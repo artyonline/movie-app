@@ -55,7 +55,6 @@ class Home extends Component {
   }
 
   async getMovies(page = 1) {
-    page = page ?? this.state.currentPage;
     try {
       const response = await axios.get(
         `${MOVIEDB_API_URL}discover/movie?api_key=${MOVIEDB_API_URL_KEY}&page=${page}`
@@ -72,7 +71,6 @@ class Home extends Component {
   }
 
   async addRemove(id) {
-    console.log("Add Remove");
     const userId = this.state.userId ?? Cookies.get("userId");
     if (userId) {
       await this.props.upsertWishList({
@@ -88,6 +86,14 @@ class Home extends Component {
         state: { addToWishList: id },
       });
     }
+  }
+
+  async updateList(page) {
+    page = page ?? this.state.currentPage;
+    const userId = this.state.userId ?? Cookies.get("userId");
+    await this.getMovies(page);
+    await this.props.fetchWishlist(userId);
+    this.formatMovieList();
   }
 
   logout() {
@@ -122,7 +128,7 @@ class Home extends Component {
             active={num === currentPage}
             onClick={async () => {
               this.setState({ currentPage: num });
-              await this.getMovies(num);
+              await this.updateList(num);
             }}
           >
             {num}
@@ -136,8 +142,7 @@ class Home extends Component {
         active={true}
         onClick={async () => {
           this.setState({ currentPage });
-          await this.getMovies(currentPage);
-          this.formatMovieList();
+          await this.updateList(currentPage);
         }}
       >
         {currentPage}
@@ -152,7 +157,7 @@ class Home extends Component {
             active={num === currentPage}
             onClick={async () => {
               this.setState({ currentPage: num });
-              await this.getMovies(num);
+              await this.updateList(num);
             }}
           >
             {num}
