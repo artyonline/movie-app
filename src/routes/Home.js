@@ -46,9 +46,11 @@ class Home extends Component {
     let movieList = [...this.state.movies];
     movieList = movieList.map((movie) => {
       // Check if the movie is added to the wishlist or not
-      movie.addedToWishlist = this.props.wishlistState.wishlist.some((item) => {
-        return parseInt(item.movieId) === movie.id;
-      });
+      movie.addedToWishlist = this.props.wishlistState.wishlist?.some(
+        (item) => {
+          return parseInt(item.movieId) === movie.id;
+        }
+      );
       return movie;
     });
     this.setState({ movies: movieList });
