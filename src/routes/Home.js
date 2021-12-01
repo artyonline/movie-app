@@ -3,6 +3,7 @@ import { compose } from "redux";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import moment from "moment";
+import { Pagination, Container } from "react-bootstrap";
 
 import Header from "../components/Header";
 import Filters from "../components/Filters";
@@ -28,6 +29,7 @@ class Home extends Component {
     movies: [],
     wishlist: this.props.wishlistState.wishlist, // this.props.wishlist
     timeAsKey: "Test",
+    totalPages: 0,
     userId: this.props.userState.user.id,
   };
   async componentWillMount() {
@@ -52,13 +54,17 @@ class Home extends Component {
     this.setState({ movies: movieList });
   }
 
-  async getMovies() {
+  async getMovies(page = 1) {
+    page = page ?? this.state.currentPage;
     try {
       const response = await axios.get(
-        `${MOVIEDB_API_URL}discover/movie?api_key=${MOVIEDB_API_URL_KEY}&page=1`
+        `${MOVIEDB_API_URL}discover/movie?api_key=${MOVIEDB_API_URL_KEY}&page=${page}`
       );
       if (response.status === 200) {
-        this.setState({ movies: response.data.results });
+        this.setState({
+          movies: response.data.results,
+          totalPages: response.data.total_pages,
+        });
       }
     } catch (err) {
       throw err;
@@ -92,6 +98,69 @@ class Home extends Component {
   }
 
   render() {
+    const pagination = [];
+    let currentPage = this.state.currentPage;
+    const totalPages = this.state.totalPages;
+    const minPages =
+      currentPage - 2 > 0
+        ? currentPage - 2
+        : currentPage - 1 > 0
+        ? currentPage - 1
+        : currentPage;
+    const maxPages =
+      currentPage + 2 < totalPages
+        ? currentPage + 2
+        : currentPage + 1 > totalPages
+        ? currentPage + 1
+        : currentPage;
+    //Add Previous Pages
+    if (currentPage > 1) {
+      for (let num = minPages; num < currentPage; num++) {
+        pagination.push(
+          <Pagination.Item
+            key={num}
+            active={num === currentPage}
+            onClick={async () => {
+              this.setState({ currentPage: num });
+              await this.getMovies(num);
+            }}
+          >
+            {num}
+          </Pagination.Item>
+        );
+      }
+    }
+    pagination.push(
+      <Pagination.Item
+        key={currentPage}
+        active={true}
+        onClick={async () => {
+          this.setState({ currentPage });
+          await this.getMovies(currentPage);
+          this.formatMovieList();
+        }}
+      >
+        {currentPage}
+      </Pagination.Item>
+    );
+    //Add Next Pages
+    if (currentPage < maxPages) {
+      for (let num = currentPage + 1; num <= maxPages; num++) {
+        pagination.push(
+          <Pagination.Item
+            key={num}
+            active={num === currentPage}
+            onClick={async () => {
+              this.setState({ currentPage: num });
+              await this.getMovies(num);
+            }}
+          >
+            {num}
+          </Pagination.Item>
+        );
+      }
+    }
+
     return (
       <div>
         <Header logout={this.logout} />
@@ -102,6 +171,9 @@ class Home extends Component {
           movies={this.state.movies}
           addRemove={this.addRemove}
         />
+        <div className={styles.centeredDiv}>
+          <Pagination size="sm">{pagination}</Pagination>
+        </div>
       </div>
     );
   }

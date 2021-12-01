@@ -1,3 +1,9 @@
 .movieListContainer {
     width: 80%;
 }
+
+.centeredDiv {
+    margin: auto;
+    width: 1%;
+    padding: 10px;
+}
