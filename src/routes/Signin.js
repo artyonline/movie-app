@@ -1,16 +1,10 @@
 import React, { Component } from "react";
-import {
-  Card,
-  Button,
-  Form,
-  InputGroup,
-  FormControl,
-} from "react-bootstrap";
+import { Card, Button, Form, InputGroup, FormControl } from "react-bootstrap";
 import styles from "../styles/unauth.module.css";
-import { signIn } from "../actions/userAction"
+import { signIn } from "../actions/userAction";
 import { connect } from "react-redux";
 import { compose } from "redux";
-import { withRouter } from 'react-router-dom'
+import { withRouter } from "react-router-dom";
 
 class Signin extends Component {
   state = {
@@ -21,13 +15,15 @@ class Signin extends Component {
   };
 
   onSubmit = async () => {
+    const addToWishList = this.props.location.state?.addToWishList;
     await this.props.signIn(this.state.data);
     if (this.props.userState.isLoggedIn) {
-      console.log("dashboard")
-      // Redirect to home page.
-      this.props.history.push("/")
+      this.props.history.push({
+        pathname: "/",
+        state: { addToWishList: addToWishList },
+      });
     }
-  }
+  };
   render() {
     return (
       <Card className="text-center">
@@ -36,35 +32,43 @@ class Signin extends Component {
           <Card.Body>
             <Form className="form-content">
               <InputGroup className="mb-3">
-                <InputGroup.Text className={styles.signInputGroupText}>Email</InputGroup.Text>
+                <InputGroup.Text className={styles.signInputGroupText}>
+                  Email
+                </InputGroup.Text>
                 <FormControl
                   className={styles.signFormContent}
                   aria-label="Email"
                   placeholder="name@example.com"
                   type="email"
                   value={this.state.data.email}
-                  onChange={e => this.setState(prevState => ({
-                    data: {
-                      ...prevState.data,
-                      email: e.target.value 
-                    }
-                  }))}
+                  onChange={(e) =>
+                    this.setState((prevState) => ({
+                      data: {
+                        ...prevState.data,
+                        email: e.target.value,
+                      },
+                    }))
+                  }
                 />
               </InputGroup>
               <InputGroup className="mb-3">
-                <InputGroup.Text className={styles.signInputGroupText}>Password</InputGroup.Text>
+                <InputGroup.Text className={styles.signInputGroupText}>
+                  Password
+                </InputGroup.Text>
                 <FormControl
                   className={styles.signFormContent}
                   aria-label="password"
                   placeholder="********"
                   type="password"
                   value={this.state.data.password}
-                  onChange={e => this.setState(prevState => ({
-                    data: {
-                      ...prevState.data,
-                      password: e.target.value 
-                    }
-                  }))}
+                  onChange={(e) =>
+                    this.setState((prevState) => ({
+                      data: {
+                        ...prevState.data,
+                        password: e.target.value,
+                      },
+                    }))
+                  }
                 />
               </InputGroup>
               <InputGroup className={styles.buttonDiv + " mb-3"}>
@@ -85,8 +89,11 @@ class Signin extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  userState: state.userStore
-})
+const mapStateToProps = (state) => ({
+  userState: state.userStore,
+});
 
-export default  compose(withRouter, connect (mapStateToProps, { signIn }) )(Signin);
+export default compose(
+  withRouter,
+  connect(mapStateToProps, { signIn })
+)(Signin);
