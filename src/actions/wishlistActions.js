@@ -23,9 +23,8 @@ export const upsertWishList =
     }
   };
 
-export const getWishlist = (userId) => async (dispatch) => {
+export const fetchWishlist = (userId) => async (dispatch) => {
   const response = await axios.get(`${apiUrl}wishlist?id=${userId}`);
-  console.log("getWishlist: ", response);
   dispatch({
     type: "SET_WISHLIST",
     data: response.data,

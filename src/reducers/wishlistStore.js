@@ -7,16 +7,15 @@ const wishlistState = {
 const wishlistStore = (state = wishlistState, action) => {
   switch (action.type) {
     case "SET_WISHLIST":
-      if (action.success) {
-        state.wishlist = action.data;
-        state.error = null;
-      }
-      console.log(state);
-      return state;
+      const wishList = action.data.data;
+      return {
+        ...state,
+        wishlist: wishList,
+        error: null,
+      };
     case "SET_SUCCESS":
       state.success = action.data;
       state.error = null;
-      console.log(state);
       return state;
     case "ERROR":
       state.success = false;

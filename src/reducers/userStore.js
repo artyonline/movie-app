@@ -1,3 +1,5 @@
+import Cookies from "js-cookie";
+
 const userState = {
   user: {},
   isLoggedIn: false,
@@ -12,14 +14,16 @@ const userStore = (state = userState, action) => {
         state.user = action.data;
         state.error = null;
       }
-      console.log(state);
+      Cookies.set("userId", action.data.id);
       return state;
     case "SIGNOUT":
+      console.log("SIGNOUT");
       if (action.success) {
         state.isLoggedIn = false;
         state.user = null;
         state.error = null;
       }
+      Cookies.remove("userId");
       return state;
     case "ERROR":
       state.isLoggedIn = false;

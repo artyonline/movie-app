@@ -4,6 +4,6 @@ import { combineReducers } from "redux";
 
 const rootReducer = combineReducers({
   userStore: userStore,
-  wishlist: wishlistStore,
+  wishlistStore: wishlistStore,
 });
 export default rootReducer;
